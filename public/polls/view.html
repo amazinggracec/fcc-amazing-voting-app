@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app = "voting-app" ng-controller = "MenuCtrl">
+    <head>
+		<link rel="stylesheet" href="../../public/css/bootstrap.min.css" type = "text/css">
+		<link href="../../public/css/main.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../../public/css/angular-chart.css" type = "text/css">
+		
+		<script type="text/javascript" src="../../public/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../public/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../public/js/angular.min.js"></script>
+		<script type="text/javascript" src="../../public/js/Chart.min.js"></script>
+		<script type="text/javascript" src="../../public/js/angular-chart.min.js"></script>
+		
+		<script type="text/javascript" src="../../public/js/clientCtrl.js"></script>
+		<script>
+			$(document).ready(function(){
+				var id = window.location.pathname.replace("/polls/", "");
+				$("#form1").attr("action", "/polls/options/add/" + id);
+				$("#remove_poll").attr("href", "delete/" + id);
+				$("#results").attr("href", "/polls/" + id + "/results");
+				$("#form_vote").attr("action", id + "/vote/");
+			});
+		</script>
+        <title>fcc-amazing-voting | {{poll_name}}</title>
+    </head>
+	<header class = "menu" ng-controller = "MenuCtrl">
+		<ul class = "menu" style = "width: 100%; left: 0;">
+			<li><a href = "/" style = "font-family: 'Roboto-Medium', sans-serif;">FCC-voting</a></li>
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "!auth">
+				<li><a href = "/login"><span style = "float: left;">Login with Twitter</span>
+					<img src="/public/img/twitter.png" alt="twiiter logo" height = "16" style = "float: left; margin-left: 6px" /> 
+				</a></li>
+			</ul>
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "auth">
+				<li><a href="/profile">Profile</a></li>
+				<li><a href="/polls/add">New Poll</a></li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+		</ul>
+	</header>
+
+	<body>
+		<div class = "main-container" ng-controller = "pollVoteCtrl">
+			<h1>{{poll_name}}</h1>
+			<div id = "twitter-share"></div>
+				<div style = "margin: 0 auto; float: left; width: 100%;" id = "vote_panel">
+
+				<form method = "get" action = "#" id = "form_vote">
+					<ul class = "votes" style = "list-style-type: none;">
+						<li ng-repeat = "option in options">					  
+							<input type="radio" name="opts" value="{{option.id}}" id = "{{option.id}}" required>
+							<label for = "{{option.id}}" style = "margin-left: 5px;">{{option.option}}</label>  
+						</li>				
+						<li >
+							<input type = "radio" name = "opts" value = "new_option" id = "new_option">
+							<label for = "new_option" style = "margin-left: 5px;">
+								<input type = "text" name = "option_name"  pattern=".{1,50}">
+							</label>
+						</li>
+					</ul>
+			        <input type = "submit" value = "Vote" class = "btn btn-vote-buttons"/>
+			        <a href = "#" id = "results">
+			        	<button type = "button" class = "btn btn-vote-buttons">View Results</button>
+			        </a>
+				</form>
+			</div>
+
+			<a id = "remove_poll" ng-show = "auth"><button class = "btn btn-delete" style = "width: 90%">delete poll</button></a>
+		</div>
+	</body>
+</html>

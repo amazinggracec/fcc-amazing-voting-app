@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html ng-app = "voting-app">
+    <head>
+		<title>fcc-amazing-voting | New Poll</title>
+		
+		<link rel="stylesheet" href="../public/css/bootstrap.min.css" type = "text/css">
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		
+		<script type="text/javascript" src="../../public/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../public/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../public/js/angular.min.js"></script>
+		<script type="text/javascript" src="../../public/js/Chart.min.js"></script>
+		<script type="text/javascript" src="../../public/js/angular-chart.min.js"></script>
+		
+		<script type="text/javascript" src="../public/js/clientCtrl.js"></script>
+	    <script>
+            function new_option(){
+                var option_id = $(".option").length;
+                $("#options").append("<div class = 'option'><label for = 'option[" + option_id + "]'>option " + (option_id + 1) + ":</label><input type = 'text' name = 'option[" + option_id + "]' id = 'option[" + option_id + "]' pattern='.{1,50}' size = '51' class = 'input_options' /></div>");
+                return false;
+            }
+        </script>
+	</head>
+	
+	<header ng-controller = "MenuCtrl" class = "menu">
+		<ul class = "menu" style = "width: 100%; left: 0;">
+			<li><a href = "/" style = "font-family: 'Roboto-Medium', sans-serif;">FCC-voting</a></li>
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "!auth">
+				<li><a href = "/login"><span style = "float: left;" >Login with Twitter</span>
+					<img src="/public/img/twitter.png" alt="twiiter logo" height = "16" style = "float: left; margin-left: 6px" /> 
+				</a></li>
+			</ul>
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "auth">
+				<li><a href="/profile">Profile</a></li>
+				<li><a href="/polls/add">New Poll</a></li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+		</ul>
+	</header>
+	<body>
+		<div class = "main-container">
+		    <form action = "/polls/add/new" method = "get">
+		        <label for = "poll_name">Poll name:</label><br /><input type = "text" id = "poll_name" name = "poll_name" pattern=".{1,140}" size = "59" required /><br />
+		        <br />
+		        <fieldset>
+		            <legend>Options</legend>
+	    	        <div id = "options">
+	    	            <div class = "option"><label for="option[0]">option 1:</label><input type = "text" id = "option[0]" name = "option[0]" pattern=".{1,50}" size = "51" class = "input_options" required /></div>
+	    	        </div>		                
+	      	    	  
+		        </fieldset>
+		        <button onclick = "new_option();" type = "button" class = "btn btn-vote-buttons">Add new option</button>
+		        <input type = "submit" value = "submit" class = "btn btn-vote-buttons" />
+		    </form>			
+		</div>
+
+	</body>
+</html>

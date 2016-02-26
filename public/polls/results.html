@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html ng-app = "voting-app" ng-controller = "MenuCtrl">
+    <head>
+		<link rel="stylesheet" href="../../public/css/bootstrap.min.css" type = "text/css">
+		<link href="../../public/css/main.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../../public/css/angular-chart.css" type = "text/css">
+		
+		<script type="text/javascript" src="../../public/js/jquery.min.js"></script>
+		<script type="text/javascript" src="../../public/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../public/js/angular.min.js"></script>
+		<script type="text/javascript" src="../../public/js/Chart.min.js"></script>
+		<script type="text/javascript" src="../../public/js/angular-chart.min.js"></script>
+		
+		<script type="text/javascript" src="../../public/js/clientCtrl.js"></script>
+		<script>
+			window.twttr = (function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0],
+				t = window.twttr || {};
+				if (d.getElementById(id)) return t;
+				js = d.createElement(s);
+				js.id = id;
+				js.src = "https://platform.twitter.com/widgets.js";
+				fjs.parentNode.insertBefore(js, fjs);
+				
+				t._e = [];
+				t.ready = function(f) {
+				t._e.push(f);
+				};
+				
+				return t;
+			}(document, "script", "twitter-wjs"));	
+			
+			$(document).ready(function(){
+				var id = window.location.pathname.replace("/polls/", "").replace("/results", "");
+				$("#poll").attr("href", "/polls/" + id);
+				$("#remove_poll").attr("href", "/polls/delete/" + id);
+			});
+
+			var app = angular.module('voting-app', ["chart.js"]);
+
+			app.controller('pollResultsCtrl', function($scope, $http){
+				var id = window.location.pathname.replace("/polls/", "").replace("/results", "");
+				$http.get("../result/" + id).success(function(options){
+					$("title").html("fcc-amazing-voting | " + options.name);
+					$scope.options = options.choices;
+					$scope.poll_name = options.name;
+					var tweet = options.name.length > 79? options.name.substring(0,79).replace(/(\s\S+$)$/gi, "...") : options.name;
+					var opts = options.choices.map(function(obj){return obj.option;});
+					var data = options.choices.map(function(obj){return obj.vote;});
+					$scope.labels = opts;
+					$scope.series = ['A'];
+					$scope.data = data;
+					$("#twitter-share").html("<a href='https://twitter.com/share' class='twitter-share-button' data-size = 'large' data-text = 'Check this out: " +  tweet + "'>Tweet</a>");
+					window.twttr.widgets.load();
+					$("#form_vote").attr("action", id + "/vote/");
+				});
+			});
+			
+			app.controller("MenuCtrl", function($scope, $http){
+				$http.get("../../auth/").success(function(profile){
+					$scope.auth = profile.authenticated;
+					$scope.username = profile.username;
+				});
+			});
+			
+		</script>
+        <title></title>
+    </head>
+	<header class = "menu">
+		<ul class = "menu" style = "width: 100%; left: 0;">
+			<li><a href = "/" style = "font-family: 'Roboto-Medium', sans-serif;">FCC-voting</a></li>
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "!auth">
+				<li><a href = "/login"><span style = "float: left;">Login with Twitter</span>
+					<img src="/public/img/twitter.png" alt="twiiter logo" height = "16" style = "float: left; margin-left: 6px" /> 
+				</a></li>
+			</ul>
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "auth">
+				<li><a href="/profile">Profile</a></li>
+				<li><a href="/polls/add">New Poll</a></li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+		</ul>
+	</header>
+
+	<body>
+		<div class = "main-container" ng-controller = "pollResultsCtrl">
+			<h1>{{poll_name}}</h1>
+			<div id = "twitter-share"></div>
+			<div style = "margin: 0 auto;" id = "results_panel">
+				<a id = "poll" href = "#">Return to poll</a>
+				<canvas id = "bar" class = "chart chart-doughnut" chart-data = "data" chart-labels = "labels" chart-series = "series" chart-legend = "true"></canvas>
+			</div>
+			<a id = "remove_poll" ng-show = "auth"><button class = "btn btn-delete" style = "width: 90%">delete poll</button></a>
+		</div>
+	</body>
+</html>
