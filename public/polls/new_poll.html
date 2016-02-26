@@ -26,15 +26,17 @@
 	<header ng-controller = "MenuCtrl" class = "menu">
 		<ul class = "menu" style = "width: 100%; left: 0;">
 			<li><a href = "/" style = "font-family: 'Roboto-Medium', sans-serif;">FCC-voting</a></li>
-			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "!auth">
-				<li><a href = "/login"><span style = "float: left;" >Login with Twitter</span>
-					<img src="/public/img/twitter.png" alt="twiiter logo" height = "16" style = "float: left; margin-left: 6px" /> 
-				</a></li>
-			</ul>
+
 			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "auth">
-				<li><a href="/profile">Profile</a></li>
+				<li><a href="/profile">My Polls</a></li>
 				<li><a href="/polls/add">New Poll</a></li>
 				<li><a href="/logout">Logout</a></li>
+			</ul>
+			
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "!auth">
+				<li><a href = "/login">Login with Twitter
+					<img src="/public/img/twitter.png" alt="twiiter logo" height = "16" style = "float: right; margin-left: 6px" /> 
+				</a></li>
 			</ul>
 		</ul>
 	</header>
