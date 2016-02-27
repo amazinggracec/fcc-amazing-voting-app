@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app = "voting-app" ng-controller = "MenuCtrl">
     <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
 		<link rel="stylesheet" href="../../public/css/bootstrap.min.css" type = "text/css">
 		<link href="../../public/css/main.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="../../public/css/angular-chart.css" type = "text/css">
@@ -21,9 +22,9 @@
 			});
 
 		</script>
-        <title></title>
+        <title ng-controller = "pollResultsCtrl">fcc-amazing-voting | {{poll_name}}</title>
     </head>
-	<header ng-controller = "MenuCtrl" class = "menu">
+	<header class = "menu">
 		<ul class = "menu" style = "width: 100%; left: 0;">
 			<li><a href = "/" style = "font-family: 'Roboto-Medium', sans-serif;">fcc-amazing-voting</a></li>
 
