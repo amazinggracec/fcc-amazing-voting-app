@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html ng-app = "voting-app" >
+
+	<head>
+		<title>fcc-amazing-voting | home</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>		
+		<link rel="stylesheet" href="public/css/bootstrap.min.css" type = "text/css">
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="public/js/jquery.min.js"></script>
+		<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="public/js/angular.min.js"></script>
+		<script type="text/javascript" src="public/js/Chart.min.js"></script>
+		<script type="text/javascript" src="public/js/angular-chart.min.js"></script>
+		<script type="text/javascript" src="public/js/clientCtrl.js"></script>
+	</head>
+
+	<header ng-controller = "MenuCtrl" class = "menu">
+		<ul class = "menu" style = "width: 100%; left: 0;">
+			<li><a href = "/" style = "font-family: 'Roboto-Medium', sans-serif;">FCC-voting</a></li>
+
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "auth">
+				<li><a href="/profile">My Polls</a></li>
+				<li><a href="/polls/add">New Poll</a></li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+			
+			<ul class = "menu" style="float:right;list-style-type:none; right: 0;" ng-show = "!auth">
+				<li><a href = "/login">Login with Twitter
+					<img src="/public/img/twitter.png" alt="twiiter logo" height = "16" style = "float: right; margin-left: 6px" /> 
+				</a></li>
+			</ul>
+		</ul>
+	</header>
+
+	<body>
+		
+		<div class = "main-container" >
+			Oops, there was an error!
+		</div>
+	</body>
+</html>

@@ -54,6 +54,11 @@ module.exports = function (app, passport) {
 			res.sendFile(path + '/public/profile.html');
 		});
 	
+	app.route('/error')
+		.get(function(req, res){
+			res.sendFile(path + '/public/error.html');
+		});
+	
 	app.route('/profile/info')
 		.get(isLoggedIn, function(req, res){
 			Poll.find({"user_id": req.user._id}, function(err, polls){
@@ -131,6 +136,7 @@ module.exports = function (app, passport) {
 			if (err){
 				throw err;
 			}
+
 			var name = poll.poll_name;
 			
 			Choice.find({"poll_id": req.params.id}, function(err, choice){
@@ -143,7 +149,7 @@ module.exports = function (app, passport) {
 				
 				var poll_info = {"name": name, choices};
 				res.json(poll_info);
-			});
+			});				
 		});
 	});
 	
@@ -236,6 +242,17 @@ module.exports = function (app, passport) {
 	});
 	
 	app.get('/polls/:id', function(req, res){
-		res.sendFile(path + '/public/polls/view.html');
+		Poll.findById(req.params.id, function(err, poll){
+			if (err){
+				throw err;
+			}
+
+			if (poll != null || poll != undefined){
+				res.sendFile(path + '/public/polls/view.html');
+			}
+			else{
+				res.redirect('/error');
+			}
+		});
 	});
 };

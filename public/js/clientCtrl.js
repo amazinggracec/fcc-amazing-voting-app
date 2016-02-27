@@ -1,6 +1,7 @@
 var app = angular.module('voting-app', ["chart.js"]);
 
 app.controller("MenuCtrl", function($scope, $http) {
+	console.log(window.location.pathname);
 	var path = "";
 	for (var i = 0; i < window.location.pathname.split("/"); i++){
 		path = path + "../";
