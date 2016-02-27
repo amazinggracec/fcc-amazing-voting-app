@@ -20,7 +20,7 @@
   "scripts": {
     "start": "node server.js"
   },
-  "author": "Blake Johnston",
+  "author": "Grace Cheung",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.0",
